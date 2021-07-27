@@ -19,6 +19,7 @@ import org.wordpress.android.util.helpers.MediaGallery;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -219,8 +220,8 @@ public abstract class EditorFragmentAbstract extends Fragment {
         void onReplaceStoryEditedBlockActionSent();
         void onReplaceStoryEditedBlockActionReceived();
         boolean showPreview();
-        Map<String, Double> onRequestBlockTypeImpressions(ArrayList<Object> newBlockTypes);
-        void onSetBlockTypeImpressionCount(String name, Double count);
+        Map<String, Integer> onRequestBlockTypeImpressions(List<Object> newBlockTypes);
+        void onSetBlockTypeImpressionCount(String name, Integer count);
     }
 
     /**

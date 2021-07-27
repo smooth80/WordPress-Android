@@ -79,6 +79,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -497,15 +498,15 @@ public class GutenbergEditorFragment extends EditorFragmentAbstract implements
                 },
                 new OnBlockTypeImpressionsEventListener() {
                     @Override
-                    public Map<String, Double> onRequestBlockTypeImpressions(ArrayList<Object> newBlockTypes) {
-                        Map<String, Double> impressions = mEditorFragmentListener.onRequestBlockTypeImpressions(
+                    public Map<String, Integer> onRequestBlockTypeImpressions(List<Object> newBlockTypes) {
+                        Map<String, Integer> impressions = mEditorFragmentListener.onRequestBlockTypeImpressions(
                                 newBlockTypes
                         );
                         return impressions;
                     }
 
                     @Override
-                    public void onSetBlockTypeImpressionCount(String name, Double count) {
+                    public void onSetBlockTypeImpressionCount(String name, Integer count) {
                         mEditorFragmentListener.onSetBlockTypeImpressionCount(name, count);
                     }
                 },

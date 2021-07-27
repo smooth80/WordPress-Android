@@ -3444,19 +3444,21 @@ public class EditPostActivity extends LocaleAwareActivity implements
         return true;
     }
 
-    @Override public Map<String, Double> onRequestBlockTypeImpressions(ArrayList<Object> newBlockTypes) {
-        Map<String, Double> newImpressions = new HashMap<>();
-        for (int i = 0; i < newBlockTypes.size(); i++) {
-            newImpressions.put(newBlockTypes.get(i).toString(), 3.0);
+    @Override public Map<String, Integer> onRequestBlockTypeImpressions(List<Object> newBlockTypes) {
+        Map<String, Integer> newImpressions = new HashMap<>();
+        if (newBlockTypes != null) {
+            for (int i = 0; i < newBlockTypes.size(); i++) {
+                newImpressions.put(newBlockTypes.get(i).toString(), 3);
+            }
         }
-        Map<String, Double> storedImpressions = AppPrefs.getGutenbergBlockTypeImpressions();
+        Map<String, Integer> storedImpressions = AppPrefs.getGutenbergBlockTypeImpressions();
         newImpressions.putAll(storedImpressions);
         AppPrefs.setGutenbergBlockTypeImpressions(newImpressions);
         return newImpressions;
     }
 
-    @Override public void onSetBlockTypeImpressionCount(String name, Double count) {
-        Map<String, Double> storedImpressions = AppPrefs.getGutenbergBlockTypeImpressions();
+    @Override public void onSetBlockTypeImpressionCount(String name, Integer count) {
+        Map<String, Integer> storedImpressions = AppPrefs.getGutenbergBlockTypeImpressions();
         storedImpressions.put(name, count);
         AppPrefs.setGutenbergBlockTypeImpressions(storedImpressions);
     }

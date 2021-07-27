@@ -4,11 +4,13 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.wordpress.android.WordPress;
 import org.wordpress.android.analytics.AnalyticsTracker;
@@ -888,15 +890,29 @@ public class AppPrefs {
         return getBoolean(DeletablePrefKey.GUTENBERG_FOCAL_POINT_PICKER_TOOLTIP_SHOWN, false);
     }
 
-    public static void setGutenbergBlockTypeImpressions(Map<String, Double> newImpressions) {
+    public static void setGutenbergBlockTypeImpressions(Map<String, Integer> newImpressions) {
         String json = GSON.toJson(newImpressions);
         setString(DeletablePrefKey.GUTENBERG_BLOCK_TYPE_IMPRESSIONS, json);
     }
 
-    public static Map<String, Double> getGutenbergBlockTypeImpressions() {
+    public static Map<String, Integer> getGutenbergBlockTypeImpressions() {
         String jsonString = getString(DeletablePrefKey.GUTENBERG_BLOCK_TYPE_IMPRESSIONS, "[]");
-        Map<String, Double> impressions = GSON.fromJson(jsonString, Map.class);
+        Map<String, Integer> impressions = GSON.fromJson(jsonString, new TypeToken<Map<String, Integer>>(){}.getType());
         return impressions;
+    }
+
+    public static void setReactNativeString(String key, String value, boolean deletable) {
+        SharedPreferences.Editor editor = prefs().edit();
+        if (TextUtils.isEmpty(value)) {
+            editor.remove(key);
+        } else {
+            editor.putString(key, value);
+        }
+        editor.apply();
+    }
+
+    public static String getReactNativeString(String key) {
+        return prefs().getString(key, null);
     }
 
     /*
