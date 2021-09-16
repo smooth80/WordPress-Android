@@ -3480,6 +3480,8 @@ public class EditPostActivity extends LocaleAwareActivity implements
                 this,
                 Origin.EDITOR_HELP,
                 getSite(),
+                mEditPostRepository.isPage() ? "page" : "post",
+                mEditPostRepository.getRemotePostId(),
                 tagsList.isEmpty() ? null : tagsList
         );
     }
@@ -3497,6 +3499,8 @@ public class EditPostActivity extends LocaleAwareActivity implements
                 this,
                 Origin.EDITOR_HELP,
                 getSite(),
+                mEditPostRepository.isPage() ? "page" : "post",
+                mEditPostRepository.getRemotePostId(),
                 tagsList.isEmpty() ? null : tagsList
         );
     }

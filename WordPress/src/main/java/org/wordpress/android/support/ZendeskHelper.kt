@@ -119,6 +119,8 @@ class ZendeskHelper(
         context: Context,
         origin: Origin?,
         selectedSite: SiteModel?,
+        selectedPostType: String?,
+        selectedPostId: Long?,
         extraTags: List<String>? = null
     ) {
         require(isZendeskEnabled) {
@@ -134,6 +136,8 @@ class ZendeskHelper(
                         siteStore.sites,
                         origin,
                         selectedSite,
+                        selectedPostType,
+                        selectedPostId,
                         extraTags,
                         buildConfigWrapper
                     )
@@ -150,6 +154,8 @@ class ZendeskHelper(
         context: Context,
         origin: Origin?,
         selectedSite: SiteModel? = null,
+        selectedPostType: String? = null,
+        selectedPostId: Long? = null,
         extraTags: List<String>? = null
     ) {
         require(isZendeskEnabled) {
@@ -165,6 +171,8 @@ class ZendeskHelper(
                         siteStore.sites,
                         origin,
                         selectedSite,
+                        selectedPostType,
+                        selectedPostId,
                         extraTags,
                         buildConfigWrapper
                     )
@@ -342,6 +350,8 @@ private fun buildZendeskConfig(
     allSites: List<SiteModel>?,
     origin: Origin?,
     selectedSite: SiteModel? = null,
+    selectedPostType: String? = null,
+    selectedPostId: Long? = null,
     extraTags: List<String>? = null,
     buildConfigWrapper: BuildConfigWrapper
 ): Configuration {
@@ -349,7 +359,7 @@ private fun buildZendeskConfig(
     return RequestActivity.builder()
         .withTicketForm(
             TicketFieldIds.form,
-            buildZendeskCustomFields(context, allSites, selectedSite, buildConfigWrapper)
+            buildZendeskCustomFields(context, allSites, selectedSite, selectedPostType, selectedPostId, buildConfigWrapper)
         )
         .withRequestSubject(ticketSubject)
         .withTags(buildZendeskTags(allSites, selectedSite, origin ?: Origin.UNKNOWN, extraTags))
@@ -364,6 +374,8 @@ private fun buildZendeskCustomFields(
     context: Context,
     allSites: List<SiteModel>?,
     selectedSite: SiteModel?,
+    selectedPostType: String?,
+    selectedPostId: Long?,
     buildConfigWrapper: BuildConfigWrapper
 ): List<CustomField> {
     val currentSiteInformation = if (selectedSite != null) {
@@ -389,6 +401,8 @@ private fun buildZendeskCustomFields(
         CustomField(TicketFieldIds.sourcePlatform, sourcePlatform)
     )
 
+    selectedPostType?.let { customFields.add(CustomField(TicketFieldIds.postType, it)) }
+    selectedPostId?.let { customFields.add(CustomField(TicketFieldIds.postId, it)) }
     selectedSite?.zendeskPlan?.let { customFields.add(CustomField(TicketFieldIds.highestPlan, it)) }
 
     return customFields
@@ -526,6 +540,8 @@ private object TicketFieldIds {
     const val appLanguage = 360008583691L
     const val sourcePlatform = 360009311651L
     const val highestPlan = 25175963L
+    const val postType = 33333333L // XXX: placeholder ID, pending a proper one created on Zendesk
+    const val postId = 33333334L // XXX: placeholder ID, pending a proper one created on Zendesk
 }
 
 object ZendeskExtraTags {

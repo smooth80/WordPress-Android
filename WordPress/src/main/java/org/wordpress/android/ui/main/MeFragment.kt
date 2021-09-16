@@ -126,7 +126,7 @@ class MeFragment : Fragment(R.layout.me_fragment), OnScrollToTopListener {
             ActivityLauncher.viewAppSettingsForResult(activity)
         }
         rowSupport.setOnClickListener {
-            ActivityLauncher.viewHelpAndSupport(requireContext(), ME_SCREEN_HELP, viewModel.getSite(), null)
+            ActivityLauncher.viewHelpAndSupport(requireContext(), ME_SCREEN_HELP, viewModel.getSite(), null, null, null)
         }
 
         initRecommendUiState()

@@ -40,6 +40,12 @@ class HelpActivity : LocaleAwareActivity() {
     private val selectedSiteFromExtras by lazy {
         intent.extras?.get(WordPress.SITE) as SiteModel?
     }
+    private val selectedPostTypeFromExtras by lazy {
+        intent.extras?.get(POST_TYPE) as String?
+    }
+    private val selectedPostIdFromExtras by lazy {
+        intent.extras?.get(POST_ID) as Long?
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -116,6 +122,8 @@ class HelpActivity : LocaleAwareActivity() {
                 this,
                 originFromExtras,
                 selectedSiteFromExtras,
+                selectedPostTypeFromExtras,
+                selectedPostIdFromExtras,
                 extraTagsFromExtras
         )
     }
@@ -125,6 +133,8 @@ class HelpActivity : LocaleAwareActivity() {
                 this,
                 originFromExtras,
                 selectedSiteFromExtras,
+                selectedPostTypeFromExtras,
+                selectedPostIdFromExtras,
                 extraTagsFromExtras
         )
     }
@@ -182,18 +192,28 @@ class HelpActivity : LocaleAwareActivity() {
     companion object {
         private const val ORIGIN_KEY = "ORIGIN_KEY"
         private const val EXTRA_TAGS_KEY = "EXTRA_TAGS_KEY"
+        private const val POST_TYPE = "POST_TYPE"
+        private const val POST_ID = "POST_ID"
 
         @JvmStatic
         fun createIntent(
             context: Context,
             origin: Origin,
             selectedSite: SiteModel?,
+            selectedPostType: String?,
+            selectedPostId: Long?,
             extraSupportTags: List<String>?
         ): Intent {
             val intent = Intent(context, HelpActivity::class.java)
             intent.putExtra(ORIGIN_KEY, origin)
             if (selectedSite != null) {
                 intent.putExtra(WordPress.SITE, selectedSite)
+            }
+            if (selectedPostType != null) {
+                intent.putExtra(POST_TYPE, selectedPostType)
+            }
+            if (selectedPostId != null) {
+                intent.putExtra(POST_ID, selectedPostId)
             }
 
             // construct a mutable list to add the related and extra tags

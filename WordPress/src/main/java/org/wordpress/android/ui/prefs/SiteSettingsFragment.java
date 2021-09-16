@@ -2084,7 +2084,7 @@ public class SiteSettingsFragment extends PreferenceFragment
         builder.setMessage(R.string.error_deleting_site_summary);
         builder.setNegativeButton(R.string.cancel, (dialog, which) -> dialog.dismiss());
         builder.setPositiveButton(R.string.contact_support,
-                (dialog, which) -> mZendeskHelper.createNewTicket(getActivity(), Origin.DELETE_SITE, mSite));
+                (dialog, which) -> mZendeskHelper.createNewTicket(getActivity(), Origin.DELETE_SITE, mSite, null, null));
         builder.show();
     }
 

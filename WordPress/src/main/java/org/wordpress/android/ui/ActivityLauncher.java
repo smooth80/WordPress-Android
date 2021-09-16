@@ -1259,7 +1259,8 @@ public class ActivityLauncher {
     }
 
     public static void viewHelpAndSupportInNewStack(@NonNull Context context, @NonNull Origin origin,
-                                          @Nullable SiteModel selectedSite, @Nullable List<String> extraSupportTags) {
+                                                    @Nullable SiteModel selectedSite, @Nullable String selectedPostType,
+                                                    @Nullable Long selectedPostId, @Nullable List<String> extraSupportTags) {
         Map<String, String> properties = new HashMap<>();
         properties.put("origin", origin.name());
         AnalyticsTracker.track(Stat.SUPPORT_OPENED, properties);
@@ -1269,7 +1270,8 @@ public class ActivityLauncher {
         mainActivityIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         Intent meIntent = new Intent(context, MeActivity.class);
         meIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        Intent helpIntent = HelpActivity.createIntent(context, origin, selectedSite, extraSupportTags);
+        Intent helpIntent = HelpActivity
+                .createIntent(context, origin, selectedSite, selectedPostType, selectedPostId, extraSupportTags);
 
         taskStackBuilder.addNextIntent(mainActivityIntent);
         taskStackBuilder.addNextIntent(meIntent);
@@ -1278,16 +1280,20 @@ public class ActivityLauncher {
     }
 
     public static void viewHelpAndSupport(@NonNull Context context, @NonNull Origin origin,
-                                          @Nullable SiteModel selectedSite, @Nullable List<String> extraSupportTags) {
+                                          @Nullable SiteModel selectedSite, @Nullable String selectedPostType,
+                                          @Nullable Long selectedPostId, @Nullable List<String> extraSupportTags) {
         Map<String, String> properties = new HashMap<>();
         properties.put("origin", origin.name());
         AnalyticsTracker.track(Stat.SUPPORT_OPENED, properties);
-        context.startActivity(HelpActivity.createIntent(context, origin, selectedSite, extraSupportTags));
+        context.startActivity(HelpActivity
+                .createIntent(context, origin, selectedSite, selectedPostType, selectedPostId, extraSupportTags));
     }
 
     public static void viewZendeskTickets(@NonNull Context context,
-                                          @Nullable SiteModel selectedSite) {
-        viewHelpAndSupportInNewStack(context, Origin.ZENDESK_NOTIFICATION, selectedSite, null);
+                                          @Nullable SiteModel selectedSite, @Nullable String selectedPostType,
+                                          @Nullable Long selectedPostId) {
+        viewHelpAndSupportInNewStack(context, Origin.ZENDESK_NOTIFICATION, selectedSite, selectedPostType,
+                selectedPostId, null);
     }
 
     public static void viewSSLCerts(Context context, String certificateString) {
