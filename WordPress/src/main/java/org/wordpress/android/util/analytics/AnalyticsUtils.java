@@ -736,7 +736,6 @@ public class AnalyticsUtils {
     public static void trackUserProfileSiteShown() {
         AnalyticsTracker.track(Stat.USER_PROFILE_SHEET_SITE_SHOWN);
     }
-
     public static void trackBlogPreviewedByUrl(String source) {
         Map<String, Object> properties = new HashMap<>();
         properties.put(SOURCE_KEY, source);
@@ -797,5 +796,10 @@ public class AnalyticsUtils {
         properties.put(CAUSE_OF_ISSUE_KEY, error);
 
         AnalyticsTracker.track(Stat.RECOMMEND_APP_CONTENT_FETCH_FAILED, properties);
+    }
+    public static void trackBlockEditorEvent(String event, Map<String, Object> properties) {
+        if (event.equals("block_inserted")) {
+            AnalyticsTracker.track(Stat.BLOCK_INSERTED, properties);
+        }
     }
 }
