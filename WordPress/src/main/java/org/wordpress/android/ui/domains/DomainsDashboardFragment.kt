@@ -1,16 +1,16 @@
 package org.wordpress.android.ui.domains
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import org.wordpress.android.R
 import org.wordpress.android.WordPress
 import org.wordpress.android.databinding.FragmentDomainsDashboardBinding
 import org.wordpress.android.ui.ActivityLauncher
-import org.wordpress.android.ui.domains.DomainRegistrationActivity.DomainRegistrationPurpose.CTA_DOMAIN_CREDIT_REDEMPTION
+import org.wordpress.android.ui.domains.DomainRegistrationActivity.DomainRegistrationPurpose.PURCHASE
 import org.wordpress.android.ui.domains.DomainsNavigationEvents.GetDomain
 import org.wordpress.android.ui.domains.DomainsNavigationEvents.OpenManageDomains
 import org.wordpress.android.ui.utils.UiHelpers
@@ -62,7 +62,7 @@ class DomainsDashboardFragment : Fragment() {
         is GetDomain -> ActivityLauncher.viewDomainRegistrationActivityForResult(
                 activity,
                 action.site,
-                CTA_DOMAIN_CREDIT_REDEMPTION
+                PURCHASE
         )
         is OpenManageDomains -> ActivityLauncher.openUrlExternal(
                 requireContext(),
